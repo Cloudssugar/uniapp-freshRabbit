@@ -1,17 +1,17 @@
 <template>
   <div>
     <CustomNavbar></CustomNavbar>
-    <!-- 轮播图 -->
-    <XtxSwiper :bannerlist="bannerlist"></XtxSwiper>
-    <!-- 分类 -->
-    <CategoryPanel :categorylist="categorylist"></CategoryPanel>
-    <!-- 热门推荐 -->
-    <HotPanel :hotlist="hotlist" ></HotPanel>
 
     <!-- 滚动容器 -->
     <scroll-view scroll-y @scrolltolower="onScrolltolower">
+      <!-- 轮播图 -->
+      <XtxSwiper :bannerlist="bannerlist"></XtxSwiper>
+      <!-- 分类 -->
+      <CategoryPanel :categorylist="categorylist"></CategoryPanel>
+      <!-- 热门推荐 -->
+      <HotPanel :hotlist="hotlist"></HotPanel>
       <!-- 猜你喜欢 -->
-      <XtxGuess ref="guessRef" :GuessLikelist="GuessLikelist"/>
+      <XtxGuess ref="guessRef" />
     </scroll-view>
   </div>
 </template>
@@ -26,8 +26,9 @@ import XtxGuess from '../../components/XtxGuess.vue'
 import { onLoad } from '@dcloudio/uni-app'
 import { ref } from 'vue'
 
-import { getHomebannerAPI, getHomeCategoryAPI, getHomeHotAPI, getHomeGoodsGuessLikeAPI } from '@/services/home'
-import type { BannerItem, CategoryItem, HotItem,GuessItem } from '../types/home'
+import { getHomebannerAPI, getHomeCategoryAPI, getHomeHotAPI } from '@/services/home'
+import type { BannerItem, CategoryItem, HotItem } from '../types/home'
+import type { XtxGuessInstance } from '../types/components.d.ts'
 
 // 轮播图
 const bannerlist = ref<BannerItem[]>([])
@@ -53,25 +54,33 @@ const gethotlist = async () => {
   hotlist.value = res.result
 }
 
-// 猜你喜欢
-const GuessLikelist = ref<GuessItem[]>([])
-const getGuessLikelist = async () => {
-  const res = await getHomeGoodsGuessLikeAPI()
-  console.log(res)
-  GuessLikelist.value = res.result.items
-}
-
 // // 滚动触底事件
-// const onScrolltolower = () => {
-//   guessRef.value?.getMore()
-// }
+const guessRef = ref<XtxGuessInstance>()
+const onScrolltolower = () => {
+  console.log('滚动到底啦')
+
+  guessRef.value?.getGuessLikelist()
+}
 
 onLoad(() => {
   getbannerlist()
   getCategorylist()
   gethotlist()
-  getGuessLikelist()
 })
 </script>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+page {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background-color: #f7f7f7;
+}
+scroll-view {
+  width: 100%;
+  flex: 1;
+  height: calc(100vh - var(--window-top));
+  // height: 100%;
+}
+</style>

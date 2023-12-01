@@ -1,8 +1,52 @@
 <script setup lang="ts">
 //
-const props=defineProps<{
-  GuessLikelist:GuessItem[]
-}>()
+import { onLoad } from '@dcloudio/uni-app'
+import { ref } from 'vue'
+
+import { getHomeGoodsGuessLikeAPI } from '@/services/home'
+import type { GuessItem } from '../pages/types/home'
+import type { PageParams } from '../pages/types/global'
+
+// 分页参数
+const ageParams: Required<PageParams> = {
+  page: 1,
+  pageSize: 10
+}
+
+// 猜你喜欢
+const GuessLikelist = ref<GuessItem[]>([])
+// 已结束标记
+const finish = ref(false)
+
+const getGuessLikelist = async () => {
+  // 退出判断
+if(finish.value===true){
+  return uni.showToast({
+    title: '没有更多数据啦',
+    icon: 'success',
+    mask: true
+  })
+}
+
+  const res = await getHomeGoodsGuessLikeAPI(ageParams)
+  console.log(res)
+  GuessLikelist.value.push(...res.result.items)
+  if (ageParams.page < res.result.pages) {
+    // 页码累加
+    ageParams.page++
+  } else {
+    finish.value = true
+  }
+}
+
+onLoad(() => {
+  getGuessLikelist()
+})
+
+// 暴露方法
+defineExpose({
+  getGuessLikelist
+})
 </script>
 
 <template>
@@ -11,25 +55,16 @@ const props=defineProps<{
     <text class="text">猜你喜欢</text>
   </view>
   <view class="guess">
-    <navigator
-      class="guess-item"
-      v-for="item in GuessLikelist"
-      :key="item.id"
-      :url="`/pages/goods/goods?id=4007498`"
-    >
-      <image
-        class="image"
-        mode="aspectFill"
-        :src="item.picture"
-      ></image>
+    <navigator class="guess-item" v-for="item in GuessLikelist" :key="item.id" :url="`/pages/goods/goods?id=4007498`">
+      <image class="image" mode="aspectFill" :src="item.picture"></image>
       <view class="name"> {{ item.name }} </view>
       <view class="price">
         <text class="small">¥</text>
-        <text>{{ item.price}}</text>
+        <text>{{ item.price }}</text>
       </view>
     </navigator>
   </view>
-  <view class="loading-text"> 正在加载... </view>
+  <view class="loading-text"> {{finish?'':'正在加载...'}} </view>
 </template>
 
 <style lang="scss">
