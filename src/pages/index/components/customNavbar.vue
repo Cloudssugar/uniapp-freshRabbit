@@ -1,12 +1,12 @@
 <script setup lang="ts">
 //获取屏幕边界的api
-const {safeAreaInsets} =uni.getSystemInfoAsync()
-console.log(safeAreaInsets);
+// const {safeAreaInsets} =uni.getSystemInfoAsync()
+// console.log(safeAreaInsets);
 
 </script>
 
 <template>
-  <view class="navbar" :style="{paddingTop:safeAreaInsets?.top}">
+  <view class="navbar" >
     <!-- logo文字 -->
     <view class="logo">
       <image class="logo-image" src="@/static/images/logo.png"></image>
