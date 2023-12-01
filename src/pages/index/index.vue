@@ -3,7 +3,7 @@
     <CustomNavbar></CustomNavbar>
 
     <!-- 滚动容器 -->
-    <scroll-view scroll-y @scrolltolower="onScrolltolower">
+    <scroll-view scroll-y refresher-enabled="istig" @refresherrefresh="onrefresherrefresh" @scrolltolower="onScrolltolower">
       <!-- 轮播图 -->
       <XtxSwiper :bannerlist="bannerlist"></XtxSwiper>
       <!-- 分类 -->
@@ -60,6 +60,20 @@ const onScrolltolower = () => {
   console.log('滚动到底啦')
 
   guessRef.value?.getGuessLikelist()
+}
+
+// 下拉刷新
+const istig = ref(false)
+const onrefresherrefresh = async () => {
+  console.log('下拉了')
+  // 开启动画
+  istig.value = true
+  // 重置猜你喜欢的数据
+  guessRef.value?.resetdata()
+  // 等待三个请求同时加载数据
+  await Promise.all([getbannerlist(), getCategorylist(), gethotlist(), guessRef.value?.getGuessLikelist()])
+  // 关闭动画
+  istig.value = false
 }
 
 onLoad(() => {

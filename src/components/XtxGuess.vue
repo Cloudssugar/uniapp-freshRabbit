@@ -13,6 +13,8 @@ const ageParams: Required<PageParams> = {
   pageSize: 10
 }
 
+
+
 // 猜你喜欢
 const GuessLikelist = ref<GuessItem[]>([])
 // 已结束标记
@@ -39,13 +41,21 @@ if(finish.value===true){
   }
 }
 
+// 重置数据
+const resetdata=()=>{
+  ageParams.page=1,
+  ageParams.pageSize=10
+  finish.value=false
+}
+
 onLoad(() => {
   getGuessLikelist()
 })
 
 // 暴露方法
 defineExpose({
-  getGuessLikelist
+  getGuessLikelist,
+  resetdata
 })
 </script>
 
