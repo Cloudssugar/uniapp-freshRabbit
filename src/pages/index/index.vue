@@ -4,14 +4,18 @@
 
     <!-- 滚动容器 -->
     <scroll-view scroll-y refresher-enabled="istig" @refresherrefresh="onrefresherrefresh" @scrolltolower="onScrolltolower">
-      <!-- 轮播图 -->
-      <XtxSwiper :bannerlist="bannerlist"></XtxSwiper>
-      <!-- 分类 -->
-      <CategoryPanel :categorylist="categorylist"></CategoryPanel>
-      <!-- 热门推荐 -->
-      <HotPanel :hotlist="hotlist"></HotPanel>
-      <!-- 猜你喜欢 -->
-      <XtxGuess ref="guessRef" />
+      <pageSkeleton v-if="isloading"> </pageSkeleton>
+
+      <template v-else>
+        <!-- 轮播图 -->
+        <XtxSwiper :bannerlist="bannerlist"></XtxSwiper>
+        <!-- 分类 -->
+        <CategoryPanel :categorylist="categorylist"></CategoryPanel>
+        <!-- 热门推荐 -->
+        <HotPanel :hotlist="hotlist"></HotPanel>
+        <!-- 猜你喜欢 -->
+        <XtxGuess ref="guessRef" />
+      </template>
     </scroll-view>
   </div>
 </template>
@@ -22,6 +26,7 @@ import XtxSwiper from '../../components/XtxSwiper.vue'
 import CategoryPanel from './components/CategoryPanel.vue'
 import HotPanel from './components/HotPanel.vue'
 import XtxGuess from '../../components/XtxGuess.vue'
+import pageSkeleton from './components/pageSkeleton.vue'
 
 import { onLoad } from '@dcloudio/uni-app'
 import { ref } from 'vue'
@@ -76,10 +81,13 @@ const onrefresherrefresh = async () => {
   istig.value = false
 }
 
-onLoad(() => {
-  getbannerlist()
-  getCategorylist()
-  gethotlist()
+// 页面加载中
+const isloading=ref(false)
+
+onLoad(async() => {
+  isloading.value= true
+  await Promise.all([ getbannerlist(), getCategorylist(),  gethotlist()])
+  isloading.value=false
 })
 </script>
 

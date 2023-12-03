@@ -1,7 +1,7 @@
 // src/types/components.d.ts
 // 全局组件类型
-import XtxSwiper from './XtxSwiper.vue'
-import XtxGuess from './XtxGuess.vue'
+import XtxSwiper from '../../components/XtxSwiper.vue'
+import XtxGuess from '../../components/XtxGuess.vue'
 
 declare module 'vue' {
   export interface GlobalComponents {

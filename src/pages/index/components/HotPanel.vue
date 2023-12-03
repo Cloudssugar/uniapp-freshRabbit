@@ -3,6 +3,8 @@
 const props=defineProps<{
   hotlist:HotItem[]
 }>()
+
+
 </script>
 
 <template>
@@ -13,7 +15,7 @@ const props=defineProps<{
         <text class="title-text">{{item.title}}</text>
         <text class="title-desc">{{item.alt}}</text>
       </view>
-      <navigator hover-class="none" :url="`/pages/hot/hot?type=${item.type}`" class="cards">
+      <navigator hover-class="none"  :url="`/pages/hot/hot?type=${item.type}`" class="cards">
         <image v-for="items in item.pictures"
           class="image"
           mode="aspectFit"

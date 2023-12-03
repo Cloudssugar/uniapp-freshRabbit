@@ -1,5 +1,7 @@
 import type { BannerItem ,CategoryItem,HotItem,GuessItem} from '@/pages/types/home'
-import type { PageParams,PageResult} from '@/pages/types/global'
+import type { GoodsItem, PageParams,PageResult} from '@/pages/types/global'
+
+
 import { http } from '@/utils/http'
 
 // 轮播图 1我首页的默认值
@@ -46,3 +48,9 @@ export const getHomeGoodsGuessLikeAPI = (data?: PageParams) => {
     data,
   })
 }
+
+
+
+// GuessItem 和 GoodsItem 类型相同
+export type GuessItem = GoodsItem
+
