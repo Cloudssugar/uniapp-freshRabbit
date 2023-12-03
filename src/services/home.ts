@@ -15,6 +15,16 @@ export const getHomebannerAPI = (distributionSite = 1) => {
   })
 }
 
+// 轮播图 2分类
+export const getSortbannerAPI = (distributionSite = 2) => {
+  return http<BannerItem[]>({
+    method: 'GET',
+    url: '/home/banner',
+    data: {
+      distributionSite
+    }
+  })
+}
 // services/home.ts
 /**
  * 首页-前台分类-小程序
