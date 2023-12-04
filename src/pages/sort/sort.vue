@@ -229,3 +229,4 @@ page {
   }
 }
 </style>
+../../types/home../../types/sort

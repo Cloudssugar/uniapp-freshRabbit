@@ -13,8 +13,6 @@ const ageParams: Required<PageParams> = {
   pageSize: 10
 }
 
-
-
 // 猜你喜欢
 const GuessLikelist = ref<GuessItem[]>([])
 // 已结束标记
@@ -22,13 +20,13 @@ const finish = ref(false)
 
 const getGuessLikelist = async () => {
   // 退出判断
-if(finish.value===true){
-  return uni.showToast({
-    title: '没有更多数据啦',
-    icon: 'success',
-    mask: true
-  })
-}
+  if (finish.value === true) {
+    return uni.showToast({
+      title: '没有更多数据啦',
+      icon: 'success',
+      mask: true
+    })
+  }
 
   const res = await getHomeGoodsGuessLikeAPI(ageParams)
   console.log(res)
@@ -42,10 +40,9 @@ if(finish.value===true){
 }
 
 // 重置数据
-const resetdata=()=>{
-  ageParams.page=1,
-  ageParams.pageSize=10
-  finish.value=false
+const resetdata = () => {
+  ;(ageParams.page = 1), (ageParams.pageSize = 10)
+  finish.value = false
 }
 
 onLoad(() => {
@@ -74,7 +71,7 @@ defineExpose({
       </view>
     </navigator>
   </view>
-  <view class="loading-text"> {{finish?'':'正在加载...'}} </view>
+  <view class="loading-text"> {{ finish ? '' : '正在加载...' }} </view>
 </template>
 
 <style lang="scss">
@@ -154,3 +151,4 @@ defineExpose({
   padding: 20rpx 0;
 }
 </style>
+../types/home../types/global

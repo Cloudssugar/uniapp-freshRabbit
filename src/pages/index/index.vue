@@ -32,8 +32,8 @@ import { onLoad } from '@dcloudio/uni-app'
 import { ref } from 'vue'
 
 import { getHomebannerAPI, getHomeCategoryAPI, getHomeHotAPI } from '@/services/home'
-import type { BannerItem, CategoryItem, HotItem } from '../types/home'
-import type { XtxGuessInstance } from '../types/components.d.ts'
+import type { BannerItem, CategoryItem, HotItem } from '@/types/home'
+import type { XtxGuessInstance } from '@/types/components.d.ts'
 
 // 轮播图
 const bannerlist = ref<BannerItem[]>([])
@@ -82,12 +82,12 @@ const onrefresherrefresh = async () => {
 }
 
 // 页面加载中
-const isloading=ref(false)
+const isloading = ref(false)
 
-onLoad(async() => {
-  isloading.value= true
-  await Promise.all([ getbannerlist(), getCategorylist(),  gethotlist()])
-  isloading.value=false
+onLoad(async () => {
+  isloading.value = true
+  await Promise.all([getbannerlist(), getCategorylist(), gethotlist()])
+  isloading.value = false
 })
 </script>
 
@@ -106,3 +106,4 @@ scroll-view {
   // height: 100%;
 }
 </style>
+../../types/home../../types/components

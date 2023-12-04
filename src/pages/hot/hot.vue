@@ -4,7 +4,7 @@ import { onLoad } from '@dcloudio/uni-app'
 import { ref } from 'vue'
 
 import { getHotRecommendAPI } from '../../services/hot'
-import type { SubTypeItem } from '../types/hot'
+import type { SubTypeItem } from '@/types/hot'
 
 // 热门推荐页 标题和url
 const hotMap = [
@@ -217,3 +217,4 @@ scroll-view {
   padding: 20rpx 0 50rpx;
 }
 </style>
+../../types/hot

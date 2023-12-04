@@ -1,6 +1,5 @@
-import type { BannerItem ,CategoryItem,HotItem,GuessItem} from '@/pages/types/home'
-import type { GoodsItem, PageParams,PageResult} from '@/pages/types/global'
-
+import type { BannerItem, CategoryItem, HotItem, GuessItem } from '@/types/home'
+import type { GoodsItem, PageParams, PageResult } from '@/types/global'
 
 import { http } from '@/utils/http'
 
@@ -32,7 +31,7 @@ export const getSortbannerAPI = (distributionSite = 2) => {
 export const getHomeCategoryAPI = () => {
   return http<CategoryItem[]>({
     method: 'GET',
-    url: '/home/category/mutli',
+    url: '/home/category/mutli'
   })
 }
 
@@ -43,7 +42,7 @@ export const getHomeCategoryAPI = () => {
 export const getHomeHotAPI = () => {
   return http<HotItem[]>({
     method: 'GET',
-    url: '/home/hot/mutli',
+    url: '/home/hot/mutli'
   })
 }
 
@@ -55,12 +54,9 @@ export const getHomeGoodsGuessLikeAPI = (data?: PageParams) => {
   return http<PageResult<GuessItem>>({
     method: 'GET',
     url: '/home/goods/guessLike',
-    data,
+    data
   })
 }
 
-
-
 // GuessItem 和 GoodsItem 类型相同
 export type GuessItem = GoodsItem
-
